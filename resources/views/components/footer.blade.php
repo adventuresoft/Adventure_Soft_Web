@@ -14,9 +14,7 @@
                         <img src="{{ asset('assets/images/logo.png') }}" alt="Adventure Soft Icon" class="h-full w-full object-contain">
                     </div>
                     <div class="flex flex-col justify-center">
-                        <span class="font-outfit font-extrabold text-2xl tracking-tight text-slate-900 leading-none">
-                            Adventure<span class="text-cyan-600">Soft</span>
-                        </span>
+                        <img src="{{ asset('assets/images/adventure_soft_logo_text.png') }}" alt="Adventure Soft" class="h-3.5 sm:h-4 w-auto max-w-[175px] object-contain object-left">
                         <span class="text-[9.5px] font-semibold text-emerald-600 tracking-tight mt-0.5 block whitespace-nowrap">For Comfortable Life with Technology</span>
                     </div>
                 </a>

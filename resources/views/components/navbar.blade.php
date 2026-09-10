@@ -12,9 +12,7 @@
                     <img src="{{ asset('assets/images/logo.png') }}" alt="Adventure Soft Icon" class="h-full w-full object-contain">
                 </div>
                 <div class="flex flex-col justify-center">
-                    <span class="font-outfit font-extrabold text-xl tracking-tight text-slate-900 leading-none">
-                        Adventure<span class="text-cyan-600">Soft</span>
-                    </span>
+                    <img src="{{ asset('assets/images/adventure_soft_logo_text.png') }}" alt="Adventure Soft" class="h-3 sm:h-3.5 w-auto max-w-[155px] sm:max-w-[165px] object-contain object-left">
                     <span class="text-[8.5px] font-semibold text-emerald-600 tracking-tight mt-0.5 block whitespace-nowrap">For Comfortable Life with Technology</span>
                 </div>
             </a>
