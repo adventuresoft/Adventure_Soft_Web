@@ -15,6 +15,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\InquiryController;
 use App\Http\Controllers\Frontend\JobApplicationController;
+use App\Http\Controllers\MediaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,11 @@ Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 // Public Form Submissions
 Route::post('/inquiry/store', [InquiryController::class, 'store'])->name('inquiry.store');
 Route::post('/careers/apply', [JobApplicationController::class, 'store'])->name('careers.apply');
+
+// Uploaded media (stored outside /public in storage/app/uploads)
+Route::get('/media/{folder}/{filename}', [MediaController::class, 'show'])
+    ->where(['folder' => '[a-z0-9_-]+', 'filename' => '[A-Za-z0-9._-]+'])
+    ->name('media.show');
 
 /*
 |--------------------------------------------------------------------------

@@ -83,59 +83,12 @@
                 </div>
             </div>
 
-            <!-- Current Photo Preview & Replacement Options -->
-            <div class="p-4 rounded-2xl bg-gray-900/60 border border-gray-800 space-y-4">
-                <div class="flex items-center space-x-4">
-                    <div class="w-14 h-14 rounded-full bg-gray-800 border border-gray-700 overflow-hidden shrink-0">
-                        <img src="{{ $team->photo }}" alt="{{ $team->name }}" class="w-full h-full object-cover">
-                    </div>
-                    <div>
-                        <span class="text-xs text-gray-400 block">Current Profile Picture</span>
-                        <span class="text-xs text-emerald-400 font-mono truncate max-w-md block">{{ $team->photo }}</span>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-gray-800">
-                    <div>
-                        <label for="photo" class="block text-xs font-semibold uppercase text-emerald-400 mb-2">Replace with New File</label>
-                        <input type="file" name="photo" id="photo" accept="image/*"
-                               class="w-full text-xs text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-500/20 file:text-emerald-300 hover:file:bg-emerald-500/30">
-                    </div>
-
-                    <div>
-                        <label for="photo_url" class="block text-xs font-semibold uppercase text-cyan-400 mb-2">OR Replace with Image URL</label>
-                        <input type="url" name="photo_url" id="photo_url" value="{{ old('photo_url') }}"
-                               class="w-full px-4 py-2.5 rounded-xl bg-gray-900 border border-gray-700 text-white text-sm focus:border-cyan-500 focus:outline-none"
-                               placeholder="https://images.unsplash.com/photo-...">
-                    </div>
-                </div>
-            </div>
+            @include('admin.teams._media_social', ['team' => $team])
 
             <div>
-                <label for="bio" class="block text-xs font-semibold uppercase text-gray-300 mb-2">Bio / Details *</label>
-                <textarea name="bio" id="bio" rows="4" required
+                <label for="bio" class="block text-xs font-semibold uppercase text-gray-300 mb-2">Bio / Details <span class="text-gray-500 normal-case font-normal">(optional)</span></label>
+                <textarea name="bio" id="bio" rows="3"
                           class="w-full px-4 py-3 rounded-xl bg-gray-900 border border-gray-700 text-white text-sm focus:border-emerald-500 focus:outline-none">{{ old('bio', $team->bio) }}</textarea>
-            </div>
-
-            <!-- Social Links -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div>
-                    <label for="linkedin" class="block text-xs font-semibold text-gray-400 mb-1">LinkedIn Profile</label>
-                    <input type="url" name="linkedin" id="linkedin" value="{{ old('linkedin', $team->social_links['linkedin'] ?? '') }}"
-                           class="w-full px-3 py-2 rounded-xl bg-gray-900 border border-gray-800 text-white text-xs">
-                </div>
-
-                <div>
-                    <label for="github" class="block text-xs font-semibold text-gray-400 mb-1">GitHub Profile</label>
-                    <input type="url" name="github" id="github" value="{{ old('github', $team->social_links['github'] ?? '') }}"
-                           class="w-full px-3 py-2 rounded-xl bg-gray-900 border border-gray-800 text-white text-xs">
-                </div>
-
-                <div>
-                    <label for="twitter" class="block text-xs font-semibold text-gray-400 mb-1">Twitter / X</label>
-                    <input type="url" name="twitter" id="twitter" value="{{ old('twitter', $team->social_links['twitter'] ?? '') }}"
-                           class="w-full px-3 py-2 rounded-xl bg-gray-900 border border-gray-800 text-white text-xs">
-                </div>
             </div>
 
             <div class="flex items-center space-x-6">

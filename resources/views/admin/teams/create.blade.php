@@ -85,48 +85,13 @@
                 </div>
             </div>
 
-            <!-- Profile Picture Upload & Image URL -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 p-4 rounded-2xl bg-gray-900/60 border border-gray-800">
-                <div>
-                    <label for="photo" class="block text-xs font-semibold uppercase text-emerald-400 mb-2">Upload Profile Picture</label>
-                    <input type="file" name="photo" id="photo" accept="image/*"
-                           class="w-full text-xs text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-500/20 file:text-emerald-300 hover:file:bg-emerald-500/30">
-                </div>
-
-                <div>
-                    <label for="photo_url" class="block text-xs font-semibold uppercase text-cyan-400 mb-2">OR Profile Image URL</label>
-                    <input type="url" name="photo_url" id="photo_url" value="{{ old('photo_url') }}"
-                           class="w-full px-4 py-2.5 rounded-xl bg-gray-900 border border-gray-700 text-white text-sm focus:border-cyan-500 focus:outline-none"
-                           placeholder="https://images.unsplash.com/photo-...">
-                </div>
-            </div>
+            @include('admin.teams._media_social')
 
             <div>
-                <label for="bio" class="block text-xs font-semibold uppercase text-gray-300 mb-2">Bio / Details *</label>
-                <textarea name="bio" id="bio" rows="4" required
+                <label for="bio" class="block text-xs font-semibold uppercase text-gray-300 mb-2">Bio / Details <span class="text-gray-500 normal-case font-normal">(optional)</span></label>
+                <textarea name="bio" id="bio" rows="3"
                           class="w-full px-4 py-3 rounded-xl bg-gray-900 border border-gray-700 text-white text-sm focus:border-emerald-500 focus:outline-none"
-                          placeholder="Short bio detailing technical expertise and leadership achievements..."></textarea>
-            </div>
-
-            <!-- Social Links -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div>
-                    <label for="linkedin" class="block text-xs font-semibold text-gray-400 mb-1">LinkedIn Profile</label>
-                    <input type="url" name="linkedin" id="linkedin" value="{{ old('linkedin') }}"
-                           class="w-full px-3 py-2 rounded-xl bg-gray-900 border border-gray-800 text-white text-xs" placeholder="https://linkedin.com/in/...">
-                </div>
-
-                <div>
-                    <label for="github" class="block text-xs font-semibold text-gray-400 mb-1">GitHub Profile</label>
-                    <input type="url" name="github" id="github" value="{{ old('github') }}"
-                           class="w-full px-3 py-2 rounded-xl bg-gray-900 border border-gray-800 text-white text-xs" placeholder="https://github.com/...">
-                </div>
-
-                <div>
-                    <label for="twitter" class="block text-xs font-semibold text-gray-400 mb-1">Twitter / X</label>
-                    <input type="url" name="twitter" id="twitter" value="{{ old('twitter') }}"
-                           class="w-full px-3 py-2 rounded-xl bg-gray-900 border border-gray-800 text-white text-xs" placeholder="https://x.com/...">
-                </div>
+                          placeholder="Short bio (internal reference)...">{{ old('bio') }}</textarea>
             </div>
 
             <div class="flex items-center space-x-6">

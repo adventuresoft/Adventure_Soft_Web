@@ -47,6 +47,19 @@ return [
             'report' => false,
         ],
 
+        /*
+        | Admin-uploaded media (team photos, etc.)
+        | Stored OUTSIDE the public folder (storage/app/uploads) and served
+        | securely through the `media.show` route — no symlink required.
+        */
+        'uploads' => [
+            'driver' => 'local',
+            'root' => storage_path('app/uploads'),
+            'visibility' => 'private',
+            'throw' => false,
+            'report' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

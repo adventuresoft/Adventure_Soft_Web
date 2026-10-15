@@ -41,8 +41,12 @@
                         <tr x-show="activeDept === 'all' || '{{ $member->department }}'.toLowerCase().includes(activeDept.toLowerCase())" class="hover:bg-gray-800/30 transition-colors">
                             <td class="py-3.5 px-4">
                                 <div class="flex items-center space-x-3">
-                                    <div class="w-11 h-11 rounded-2xl bg-gray-800 border border-gray-700 overflow-hidden shrink-0">
-                                        <img src="{{ $member->photo }}" alt="{{ $member->name }}" class="w-full h-full object-cover">
+                                    <div class="w-11 h-11 rounded-full bg-gray-800 border-2 border-emerald-500/60 overflow-hidden shrink-0 flex items-center justify-center">
+                                        @if($member->photo_url)
+                                            <img src="{{ $member->photo_url }}" alt="{{ $member->name }}" class="w-full h-full object-cover object-top">
+                                        @else
+                                            <span class="text-xs font-bold text-emerald-300">{{ $member->initials }}</span>
+                                        @endif
                                     </div>
                                     <div>
                                         <span class="font-semibold text-white block text-sm">{{ $member->name }}</span>
