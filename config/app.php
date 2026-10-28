@@ -56,6 +56,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Maintenance Secret Key
+    |--------------------------------------------------------------------------
+    |
+    | Secret key for running web-triggered maintenance tasks such as clearing
+    | caches and running database migrations without SSH terminal access.
+    |
+    */
+
+    'maintenance_key' => env('MAINTENANCE_KEY', 'adventuresoft_secure_maint_2026'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |

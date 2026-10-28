@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 class MediaController extends Controller
 {
     /** Only these top-level folders may be served publicly. */
-    protected array $allowedFolders = ['teams'];
+    protected array $allowedFolders = ['teams', 'projects'];
 
     public function show(string $folder, string $filename): BinaryFileResponse
     {

@@ -16,6 +16,7 @@ use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\InquiryController;
 use App\Http\Controllers\Frontend\JobApplicationController;
 use App\Http\Controllers\MediaController;
+use App\Http\Controllers\MaintenanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,19 @@ Route::post('/careers/apply', [JobApplicationController::class, 'store'])->name(
 Route::get('/media/{folder}/{filename}', [MediaController::class, 'show'])
     ->where(['folder' => '[a-z0-9_-]+', 'filename' => '[A-Za-z0-9._-]+'])
     ->name('media.show');
+
+/*
+|--------------------------------------------------------------------------
+| System Maintenance Routes (Protected by Secret Key)
+| Usage:
+|   - Clear Cache: /system/clear-cache/{key} or /system/clear-cache?key={key}
+|   - Run Migrate: /system/migrate/{key} or /system/migrate?key={key}
+|   - Check Status: /system/migrate-status/{key} or /system/migrate-status?key={key}
+|--------------------------------------------------------------------------
+*/
+Route::get('/system/clear-cache/{key?}', [MaintenanceController::class, 'clearCache'])->name('system.clear-cache');
+Route::get('/system/migrate/{key?}', [MaintenanceController::class, 'migrate'])->name('system.migrate');
+Route::get('/system/migrate-status/{key?}', [MaintenanceController::class, 'migrateStatus'])->name('system.migrate-status');
 
 /*
 |--------------------------------------------------------------------------
@@ -74,6 +88,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Careers & Job Openings Management CRUD
         Route::resource('jobs', JobAdminController::class);
         Route::get('/jobs/{job}/applications', [JobAdminController::class, 'applications'])->name('jobs.applications');
+        Route::get('/applications/{application}/cv', [JobAdminController::class, 'downloadResume'])->name('applications.cv');
         Route::patch('/applications/{application}/status', [JobAdminController::class, 'updateApplicationStatus'])->name('applications.status');
         Route::delete('/applications/{application}', [JobAdminController::class, 'destroyApplication'])->name('applications.destroy');
 

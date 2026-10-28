@@ -138,4 +138,45 @@ class JobAdminController extends Controller
 
         return back()->with('success', 'Candidate application removed successfully.');
     }
+
+    public function downloadResume(Request $request, $applicationId)
+    {
+        $application = JobApplication::findOrFail($applicationId);
+        $path = $application->resume_path;
+
+        if (empty($path)) {
+            abort(404, 'No resume file attached to this candidate application.');
+        }
+
+        // Determine which storage disk contains the file
+        $disk = null;
+        if (Storage::disk('public')->exists($path)) {
+            $disk = Storage::disk('public');
+        } elseif (Storage::disk('uploads')->exists($path)) {
+            $disk = Storage::disk('uploads');
+        } elseif (Storage::disk('local')->exists($path)) {
+            $disk = Storage::disk('local');
+        }
+
+        if (!$disk) {
+            abort(404, 'Resume file was not found on the server storage.');
+        }
+
+        $fullPath = $disk->path($path);
+        $mime = $disk->mimeType($path) ?: 'application/pdf';
+        $extension = pathinfo($fullPath, PATHINFO_EXTENSION) ?: 'pdf';
+        $cleanFileName = Str::slug($application->applicant_name) . '-resume.' . $extension;
+
+        if ($request->boolean('download')) {
+            return response()->download($fullPath, $cleanFileName, [
+                'Content-Type' => $mime,
+            ]);
+        }
+
+        // Inline preview in browser
+        return response()->file($fullPath, [
+            'Content-Type' => $mime,
+            'Content-Disposition' => 'inline; filename="' . $cleanFileName . '"',
+        ]);
+    }
 }

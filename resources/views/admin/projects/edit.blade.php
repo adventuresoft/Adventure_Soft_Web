@@ -10,7 +10,7 @@
     </div>
 
     <div class="glass-panel rounded-2xl p-8">
-        <form action="{{ route('admin.projects.update', $project->id) }}" method="POST" class="space-y-6">
+        <form action="{{ route('admin.projects.update', $project->id) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
             @csrf
             @method('PUT')
 
@@ -58,6 +58,62 @@
                 <label for="tech_stack" class="block text-xs font-semibold uppercase text-gray-300 mb-2">Technologies Used (Comma Separated)</label>
                 <input type="text" name="tech_stack" id="tech_stack" value="{{ old('tech_stack', is_array($project->tech_stack) ? implode(', ', $project->tech_stack) : $project->tech_stack) }}"
                        class="w-full px-4 py-3 rounded-xl bg-gray-900 border border-gray-700 text-white text-sm focus:border-emerald-500 focus:outline-none">
+            </div>
+
+            <!-- Project Thumbnail / Cover (Optional) -->
+            <div class="p-5 rounded-2xl bg-gray-900/60 border border-gray-800"
+                 x-data="{
+                    preview: @js($project->thumbnail_url),
+                    removed: false,
+                    pick(e) {
+                        const f = e.target.files[0];
+                        if (!f) return;
+                        this.preview = URL.createObjectURL(f);
+                        this.removed = false;
+                        if ($refs.url) $refs.url.value = '';
+                    }
+                 }">
+                <label class="block text-xs font-semibold uppercase text-emerald-400 mb-2">Project Thumbnail / Showcase Image <span class="text-gray-500 normal-case font-normal">(optional)</span></label>
+                <div class="flex flex-col sm:flex-row gap-6 items-start">
+                    <div class="shrink-0 flex flex-col items-center space-y-2">
+                        <div class="w-36 h-24 rounded-xl overflow-hidden bg-gray-800 border border-gray-700 flex items-center justify-center">
+                            <template x-if="preview && !removed">
+                                <img :src="preview" alt="Preview" class="w-full h-full object-cover">
+                            </template>
+                            <template x-if="!preview || removed">
+                                <span class="text-[10px] text-gray-500 uppercase tracking-wider">No Image</span>
+                            </template>
+                        </div>
+                        <span class="text-[10px] text-gray-500 uppercase tracking-wider">Preview</span>
+                    </div>
+
+                    <div class="flex-1 w-full space-y-4">
+                        <div>
+                            <input type="file" name="thumbnail" id="thumbnail" accept="image/jpeg,image/png,image/webp" @change="pick($event)"
+                                   class="w-full text-xs text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-500/20 file:text-emerald-300 hover:file:bg-emerald-500/30 cursor-pointer">
+                            <p class="text-[11px] text-gray-500 mt-1.5">JPG, PNG or WEBP · max 4MB. Stored securely in <code class="text-emerald-400">storage/app/uploads/projects</code>.</p>
+                            @error('thumbnail') <p class="text-xs text-red-400 mt-1">{{ $message }}</p> @enderror
+                        </div>
+
+                        <div>
+                            <label for="thumbnail_url" class="block text-[11px] font-semibold uppercase text-cyan-400 mb-1">OR External Image URL</label>
+                            <input type="url" name="thumbnail_url" id="thumbnail_url" x-ref="url" value="{{ old('thumbnail_url', preg_match('#^https?://#i', $project->thumbnail ?? '') ? $project->thumbnail : '') }}"
+                                   @input="if ($event.target.value) { preview = $event.target.value; removed = false; }"
+                                   class="w-full px-4 py-2.5 rounded-xl bg-gray-900 border border-gray-700 text-white text-sm focus:border-cyan-500 focus:outline-none"
+                                   placeholder="https://... / image URL">
+                            @error('thumbnail_url') <p class="text-xs text-red-400 mt-1">{{ $message }}</p> @enderror
+                        </div>
+
+                        @if(!empty($project->thumbnail))
+                            <div class="pt-1">
+                                <label class="inline-flex items-center space-x-2 text-xs text-red-400 hover:text-red-300 cursor-pointer">
+                                    <input type="checkbox" name="remove_thumbnail" value="1" @change="removed = $event.target.checked" class="rounded border-gray-700 bg-gray-900 text-red-500">
+                                    <span>Remove current image</span>
+                                </label>
+                            </div>
+                        @endif
+                    </div>
+                </div>
             </div>
 
             <div class="flex items-center space-x-6">
